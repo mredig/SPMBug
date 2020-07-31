@@ -4,25 +4,31 @@
 import PackageDescription
 
 let package = Package(
-    name: "SPMBug",
-    products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(
-            name: "SPMBug",
-            targets: ["SPMBug"]),
-    ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
-            name: "SPMBug",
-            dependencies: []),
-        .testTarget(
-            name: "SPMBugTests",
-            dependencies: ["SPMBug"]),
-    ]
+	name: "SPMBug",
+	products: [
+		// Products define the executables and libraries a package produces, and make them visible to other packages.
+		.library(
+			name: "SPMBug",
+			targets: ["SPMBug"]),
+		.library(
+			name: "SPMBugTrigger",
+			targets: ["SPMBugTrigger"]),
+	],
+	dependencies: [],
+	targets: [
+		.target(
+			name: "SPMBug",
+			dependencies: ["SPMBugTrigger"]),
+		.target(
+			name: "SPMBugTrigger",
+			dependencies: [],
+			// it appears that the problem is having resources in a dependent target using ios
+			resources: [
+				.copy("Resources")
+			]
+		),
+		.testTarget(
+			name: "SPMBugTests",
+			dependencies: ["SPMBug"]),
+	]
 )
